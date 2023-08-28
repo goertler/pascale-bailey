@@ -16,9 +16,43 @@ library(tidyr)
 lobster_traps <- read_csv("../data/Lobster_Trap_Counts_All_Years_20210519.csv")
 ```
 
-Look at your data. Take a minute to explore what your data structure looks like, what data types are in the data frame, or use a function to get a high-level summary of the data you’re working with.
-
 ```{r}
 glimpse(lobster_traps)
 ```
+
+```{r}
+lobster_traps = lobster_traps %>%
+  mutate(TRAPS = na_if(TRAPS, -99999))
+```
+
+## Exercise: Data Visualization
+```{r}
+#| warning: false
+#| message: false
+
+facet_plot <- ggplot(data = lobster_traps, aes(x = TRAPS))+
+  geom_histogram()+
+  facet_wrap(~YEAR,ncol = 5, nrow = 2)+
+  theme_bw()+
+  labs(x = "# Traps", y = "Frequency")
+facet_plot
+```
+
+```{r}
+lobsters_traps_summarize <- lobster_traps %>% 
+  group_by(SITE, YEAR) %>% 
+  summarize(TOTAL_TRAPS = sum(TRAPS, na.rm = TRUE))
+
+ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS, linetype = SITE)) +
+    geom_point(aes(color = SITE)) +
+    geom_line(aes(color = SITE))+
+  labs(x = "Year", y = "Total Traps")+
+  ggtitle("Observed Lobster Traps Over Time")+
+  theme_light()+
+  scale_x_continuous(breaks = 2012:2021, labels = 2012:2021)+
+  theme(axis.title = element_text(size = 12, face = "bold"),
+        legend.title = element_text(size = 12, face = 'bold'),
+        plot.title = element_text(size = 14, face = 'bold'))
+```
+
 
