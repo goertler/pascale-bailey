@@ -1,25 +1,24 @@
 ---
 title: "collaborator analysis"
+author: "Bailey Morrison"
 format: html
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+## Exercise: Explore, Clean, and Wrangle Data
 ```{r}
-1 + 1
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
 ```
 
-You can add options to executable code like this 
-
 ```{r}
-#| echo: false
-2 * 2
+lobster_traps <- read_csv("../data/Lobster_Trap_Counts_All_Years_20210519.csv")
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Look at your data. Take a minute to explore what your data structure looks like, what data types are in the data frame, or use a function to get a high-level summary of the data you’re working with.
+
+```{r}
+glimpse(lobster_traps)
+```
+
